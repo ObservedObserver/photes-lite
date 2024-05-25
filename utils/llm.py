@@ -9,15 +9,16 @@ def generated_notes_from_images(client: OpenAI, image_base64: str, model: str="g
                 "role": "user",
                 "content": [
                     {"type": "text", "text": """You are a great note taker, for the uploaded images, generate notes contains import information.
+                        The images usually taken from slides, meeting notes, what you need to do is help to take notes from the images.
                         Output the information directly, do not say anything else.
-                        If there are some tables, mind map, try to extract all orignial information from them with table or list.
                         Make it more like a note contains important information, not a description of the image.
                         A good structure of generated notes is like: 
                         <example-structure>
                         ## <-title->
-                        <-summary->
-                        <-details->
+                        <-a paragraph of summary->
+                        <-details information from the image->
                         </example-structure>
+                        If there are some tables, try to extract all orignial information in table format.
                     """},
                     {
                         "type": "image_url",
@@ -33,8 +34,3 @@ def generated_notes_from_images(client: OpenAI, image_base64: str, model: str="g
         if chunk.choices[0].delta.content is not None:
             notes = chunk.choices[0].delta.content
         yield notes
-    # return response
-    # full_notes = ''
-    # for chunk in response.choices:
-    #     full_notes += chunk.choices[0].delta.get("content", "")
-    #     yield full_notes
