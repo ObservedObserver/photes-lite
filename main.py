@@ -13,6 +13,18 @@ default_vault_path = '/Users/observedobserver/Documents/obsidian-notes/elwynn-li
 client = OpenAI(api_key=api_key, base_url=openai_base_url)
 
 with st.sidebar:
+    import qrcode
+    from io import BytesIO
+    from streamlit.web.server import server_util
+    internal_ip = st.net_util.get_internal_ip()
+    url = server_util.get_url(internal_ip)
+    img = qrcode.make(url)
+
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    img_bytes = buffer.getvalue()
+
+    st.image(img_bytes, caption=f"scan to open {url}", use_column_width=True)
     obsidian_db = st.text_input('Obsidian DB', value=default_vault_path)
     model = st.selectbox('Model', ['gpt-4o', 'gpt-4-vision'])
 
