@@ -9,18 +9,18 @@ api_key = st.secrets["OPENAI_API_KEY"]
 openai_base_url = st.secrets.get("OPENAI_BASE_URL")
 notion_token = st.secrets["NOTION_API_KEY"]
 
+default_vault_path = '/Users/observedobserver/Documents/obsidian-notes/elwynn-library/image-to-notes'
 client = OpenAI(api_key=api_key, base_url=openai_base_url)
 
-st.title('Turn your photos into notes with AI')
-
 with st.sidebar:
-    obsidian_db = st.text_input('Obsidian DB', value='/Users/observedobserver/Documents/obsidian-notes/elwynn-library/image-to-notes')
+    obsidian_db = st.text_input('Obsidian DB', value=default_vault_path)
     model = st.selectbox('Model', ['gpt-4o', 'gpt-4-vision'])
 
-# notion_db = st.text_input('Notion DB', value='1ce492388e4a4538bb66f4ac979c9964')
-title = st.text_input('Note Title', value='Meetup Notes')
+st.title('Turn your photos into notes with AI')
+title = st.text_input('Note Title', value='New Notes')
 
 img_files = st.file_uploader('Your photos', accept_multiple_files=True)
+
 all_done = 0
 if img_files is not None:
     for img_file in img_files:
