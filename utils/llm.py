@@ -21,6 +21,7 @@ def generated_notes_from_images(client: OpenAI, image_base64: str, ocr_enhance_i
         <-details information from the image->
         </example-structure>
         If there are some tables, try to extract all orignial information in table format.
+        Use the same language as the image, do not change the language.
         {ocr_prompt}
     """
     response = client.chat.completions.create(
